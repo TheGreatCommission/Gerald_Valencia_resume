@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerald Valencia - Interactive Resume</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary-color: #1e3a8a; /* Deep Blue */
+            --secondary-color: #3b82f6; /* Lighter Blue */
+            --bg-color: #f8fafc;
+            --text-color: #334155;
+            --sidebar-bg: #ffffff;
+            --accent-color: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .resume-container {
+            display: flex;
+            max-width: 1200px;
+            background: var(--sidebar-bg);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            width: 100%;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 35%;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 3rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .profile-pic {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+            background-color: white; /* Placeholder background */
+        }
+
+        .sidebar h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .headline {
+            font-size: 1rem;
+            font-weight: 300;
+            color: #bfdbfe;
+            margin-bottom: 2rem;
+            line-height: 1.4;
+        }
+
+        .contact-info {
+            width: 100%;
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .contact-item i {
+            width: 25px;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            margin-right: 10px;
+        }
+
+        .contact-item a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-item a:hover {
+            color: var(--secondary-color);
+        }
+
+        .skills-section {
+            width: 100%;
+            text-align: left;
+        }
+
+        .skills-section h3 {
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            width: 65%;
+            padding: 3rem;
+            background: white;
+            overflow-y: auto;
+            max-height: 90vh;
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .section-title:first-child {
+            margin-top: 0;
+        }
+
+        .timeline-item {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+            border-left: 2px solid var(--accent-color);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 6px;
+            width: 10px;
+            height: 10px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+        }
+
+        .timeline-date {
+            font-size: 0.85rem;
+            color: #64748b;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .timeline-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+
+        .timeline-subtitle {
+            font-size: 0.95rem;
+            font-style: italic;
+            color: #475569;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-item p, .timeline-item ul {
+            font-size: 0.9rem;
+            color: #475569;
+        }
+
+        .timeline-item ul {
+            padding-left: 1.2rem;
+            margin-top: 0.5rem;
+        }
+
+        .project-card {
+            background: var(--bg-color);
+            border: 1px solid var(--accent-color);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            transition: transform 0.2s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .project-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.3rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .resume-container {
+                flex-direction: column;
+            }
+            .sidebar, .main-content {
+                width: 100%;
+            }
+            .main-content {
+                max-height: none;
+            }
+            .contact-info, .skills-section {
+                text-align: center;
+            }
+            .contact-item {
+                justify-content: center;
+            }
+            .skill-tags {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="resume-container">
+        <div class="sidebar">
+            <img src="geropic11.jpg" alt="Gerald Valencia" class="profile-pic">
+            <h1>Gerald Valencia</h1>
+            <div class="headline">Mathematics Educator | Aspiring Data Scientist | EdTech Developer</div>
+
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Soldiers Hills IV, Bacoor</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>0951-093-0117</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <a href="mailto:gerothornz05@gmail.com">gerothornz05@gmail.com</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-linkedin"></i>
+                    <a href="https://www.linkedin.com/in/gerald-valencia-513105216/" target="_blank">LinkedIn Profile</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-code"></i>
+                    <span>Brand: AppGeroMetrics</span>
+                </div>
+            </div>
+
+            <div class="skills-section">
+                <h3>Core Skills</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">HTML5 / CSS / JavaScript</span>
+                    <span class="skill-tag">Next.js</span>
+                    <span class="skill-tag">Python Programming</span>
+                    <span class="skill-tag">Data Analysis</span>
+                    <span class="skill-tag">Agentic AI Development</span>
+                    <span class="skill-tag">Microsoft 365 / G-Suite</span>
+                    <span class="skill-tag">Educational Technology</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            
+            <h2 class="section-title">Summary</h2>
+            <p style="font-size: 0.95rem; color: #475569; margin-bottom: 2rem;">
+                Licensed Professional Teacher with over a decade of experience in education, specializing in Mathematics. Seamlessly blending a strong pedagogical background with technical expertise in web development (HTML, CSS, JS, Next.js), Python, and data science. Passionate about leveraging Agentic AI and building custom EdTech applications to automate administrative workflows and enhance student learning outcomes.
+            </p>
+
+            <h2 class="section-title">Experience</h2>
+            
+            <div class="timeline-item">
+                <div class="timeline-date">February 2025 – Present</div>
+                <div class="timeline-title">College Instructor</div>
+                <div class="timeline-subtitle">Saint Francis of Assisi College</div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">August 2023 – Present</div>
+                <div class="timeline-title">Teacher I (Math Teacher)</div>
+                <div class="timeline-subtitle">Las Piñas East National High School</div>
+                <ul>
+                    <li>Develop and deliver comprehensive mathematics curriculum.</li>
+                    <li>Head Coach and Arbiter for Division Damath activities.</li>
+                </ul>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">December 2022 – Present</div>
+                <div class="timeline-title">Web Developer</div>
+                <div class="timeline-subtitle">Freelance (AppGeroMetrics)</div>
+                <ul>
+                    <li>Design and develop custom web applications focusing on educational tools and workflow automation.</li>
+                </ul>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">August 2019 – June 2023</div>
+                <div class="timeline-title">Math Teacher</div>
+                <div class="timeline-subtitle">Grace Christian College</div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">June 2015 – April 2019</div>
+                <div class="timeline-title">College Instructor</div>
+                <div class="timeline-subtitle">Asian College</div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">October 2013 – May 2015</div>
+                <div class="timeline-title">Data Engineer</div>
+                <div class="timeline-subtitle">Evolve Discovery</div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">June 2011 – October 2013</div>
+                <div class="timeline-title">College Instructor</div>
+                <div class="timeline-subtitle">Asian Institute of Computer Studies</div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">June 2009 – May 2011</div>
+                <div class="timeline-title">High School Teacher</div>
+                <div class="timeline-subtitle">St. Jerome School of Novaliches</div>
+            </div>
+
+            <h2 class="section-title">Notable Projects</h2>
+
+            <div class="project-card">
+                <h4>Grade 10 Math Progressive Web App (PWA)</h4>
+                <p>Developing an offline-capable web application specifically tailored for Grade 10 Mathematics students as part of an MAED thesis, designed to make learning materials highly accessible.</p>
+            </div>
+
+            <div class="project-card">
+                <h4>School-Wide Automation System</h4>
+                <p>Prototyped a QR-code-based system designed to streamline enrollment, automate attendance tracking, and manage guidance case reporting for faculty and staff.</p>
+            </div>
+
+            <div class="project-card">
+                <h4>"Mystery Box" Recipe Generator</h4>
+                <p>A fun, interactive web app that randomizes ingredients to create culinary challenges, built utilizing HTML, CSS, and modern JavaScript.</p>
+            </div>
+
+            <h2 class="section-title">Education</h2>
+
+            <div class="timeline-item">
+                <div class="timeline-date">2025 – Present</div>
+                <div class="timeline-title">Master of Arts in Education, Major in Mathematics</div>
+                <div class="timeline-subtitle">University of Perpetual Help - Dalta</div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">2005 – 2009</div>
+                <div class="timeline-title">Bachelor of Science in Mathematics</div>
+                <div class="timeline-subtitle">Polytechnic University of the Philippines, Manila</div>
+            </div>
+
+            <h2 class="section-title">Licenses & Certifications</h2>
+            
+            <div class="timeline-item">
+                <div class="timeline-date">September 2017</div>
+                <div class="timeline-title">Professional Teacher's License</div>
+                <div class="timeline-subtitle">Professional Regulatory Commission (PRC)</div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">TESDA Qualifications</div>
+                <div class="timeline-title">National Certificates (NC)</div>
+                <ul>
+                    <li>Housekeeping NC</li>
+                    <li>Food & Beverage Services NC</li>
+                    <li>Events Management NC</li>
+                    <li>Bread & Pastry Production NC</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Simple script to add slight entrance animations to timeline items
+        document.addEventListener("DOMContentLoaded", () => {
+            const items = document.querySelectorAll('.timeline-item, .project-card');
+            items.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+                item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                setTimeout(() => {
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>
